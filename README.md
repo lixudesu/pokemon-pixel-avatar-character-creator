@@ -73,30 +73,6 @@ Contribuicoes sao bem-vindas. Se alguem quiser ajudar com novos assets, variacoe
 
 Antes de enviar novos assets, tente manter a mesma organizacao de pastas e os mesmos formatos usados em `assets/`, para facilitar a integracao no criador.
 
-## Publicar no GitHub Pages
-
-Sim, este site pode ficar online pelo **GitHub Pages**. Como ele ja e estatico, nao precisa configurar build.
-
-Resumo rapido:
-
-1. Crie um repositorio no GitHub.
-2. Envie todos os arquivos desta pasta para a raiz do repositorio.
-3. Garanta que o `index.html` fique na raiz.
-4. Entre em `Settings` > `Pages`.
-5. Em `Build and deployment`, escolha `Deploy from a branch`.
-6. Selecione a branch `main` e a pasta `/ (root)`.
-7. Salve e aguarde o link do site ficar disponivel.
-
-O guia detalhado esta em [`docs/GITHUB_PAGES.md`](docs/GITHUB_PAGES.md).
-
-## Checklist antes de subir
-
-- `index.html`, `styles.css`, `app.js`, `manifest.json` e `assets/` estao no repositorio.
-- A pasta `assets/backgrounds/` contem os PNGs usados no seletor de fundos.
-- O GitHub Pages esta apontando para `main` e `/ (root)`.
-- O site abre pela URL `https://SEU-USUARIO.github.io/NOME-DO-REPOSITORIO/`.
-
-## Observacao
 
 Algumas pecas podem nao existir em todos os formatos. Quando isso acontece, o criador ignora somente aquela camada no formato faltante e mantem o restante do avatar normalmente.
 
