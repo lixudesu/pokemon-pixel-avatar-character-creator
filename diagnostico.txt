@@ -1,0 +1,51 @@
+{
+  "copied_png_assets": 2420,
+  "categories": {
+    "body": {
+      "items": 1,
+      "variants": 4
+    },
+    "bottom": {
+      "items": 19,
+      "variants": 86
+    },
+    "top": {
+      "items": 27,
+      "variants": 128
+    },
+    "hair": {
+      "items": 4,
+      "variants": 46
+    },
+    "hat": {
+      "items": 19,
+      "variants": 41
+    },
+    "carry": {
+      "items": 3,
+      "variants": 27
+    }
+  },
+  "views": {
+    "front": {
+      "female": 218,
+      "male": 218
+    },
+    "back": {
+      "female": 155,
+      "male": 155
+    },
+    "walk": {
+      "female": 279,
+      "male": 279
+    },
+    "run": {
+      "female": 279,
+      "male": 279
+    },
+    "bike": {
+      "female": 279,
+      "male": 279
+    }
+  }
+}

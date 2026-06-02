@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trainer Avatar Maker Completo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <main class="layout">
+      <section class="preview-card" aria-label="Prévia do avatar">
+        <div class="panel-title-row">
+          <div>
+            <p class="panel-kicker">Resultado</p>
+            <h2 id="currentTitle">Treinador completo</h2>
+          </div>
+          <button id="randomizeBtn" class="ghost-btn" type="button">Aleatório</button>
+        </div>
+
+        <div class="segmented" role="group" aria-label="Modelo">
+          <button class="gender-btn active" data-gender="female" type="button">Feminino</button>
+          <button class="gender-btn" data-gender="male" type="button">Masculino</button>
+        </div>
+
+        <div class="preview-header-row">
+          <div>
+            <p class="panel-kicker small">Visualização</p>
+            <strong id="activeViewLabel">Frente</strong>
+          </div>
+        </div>
+
+        <div id="viewSwitcher" class="view-switcher" role="tablist" aria-label="Tipo de prévia"></div>
+
+        <div class="background-picker-block">
+          <p class="panel-kicker small">Fundo</p>
+          <div id="backgroundSelector" class="background-selector" role="listbox" aria-label="Fundo da prévia"></div>
+        </div>
+
+        <div class="hero-preview single-preview">
+          <canvas id="displayCanvas" width="520" height="260" aria-label="Prévia selecionada"></canvas>
+        </div>
+
+        <div class="action-row">
+          <button id="downloadCurrentBtn" class="primary-btn" type="button">Baixar</button>
+          <button id="downloadSceneBtn" class="ghost-btn" type="button">Baixar PNG</button>
+          <button id="downloadSpritesBtn" class="ghost-btn" type="button">Baixar sprites</button>
+          <button id="resetBtn" class="ghost-btn" type="button">Reset</button>
+        </div>
+
+        <details class="tips">
+          <summary>Como funciona</summary>
+          <p>Você seleciona as peças usando apenas os assets do trainer de frente. As versões de costas e dos sprites pequenos são montadas automaticamente em segundo plano. Para andar, correr e bike, a prévia mostra uma animação em vez da sprite sheet inteira.</p>
+        </details>
+      </section>
+
+      <section class="mobile-preview-dock" aria-label="Prévia fixa do avatar">
+        <div>
+          <p class="panel-kicker small">Prévia</p>
+          <strong id="mobileDockLabel">Icon</strong>
+        </div>
+        <div class="mobile-preview-stage">
+          <canvas id="mobileDockCanvas" width="220" height="96" aria-label="Prévia fixa selecionada"></canvas>
+        </div>
+      </section>
+
+      <section class="editor-card" aria-label="Editor de peças">
+        <div class="panel-title-row compact">
+          <div>
+            <p class="panel-kicker">Editor único</p>
+            <h2>Peças do avatar</h2>
+          </div>
+          <span id="assetCounter" class="asset-counter"></span>
+        </div>
+        <nav id="categoryTabs" class="category-tabs" aria-label="Categorias"></nav>
+        <div id="categoryPanel" class="category-panel"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
