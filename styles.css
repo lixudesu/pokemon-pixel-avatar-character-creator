@@ -34,6 +34,7 @@ h1{font-size:clamp(2rem,4vw,4.7rem);line-height:.92;margin:0;letter-spacing:-.06
 .background-selector button{flex:0 0 auto;width:76px;aspect-ratio:240/112;border:2px solid rgba(234,216,183,.95);border-radius:12px;background-color:#78c8ef;background-position:center;background-size:cover;box-shadow:inset 0 0 0 1px rgba(255,255,255,.38)}
 .background-selector button.active{border-color:var(--ink);box-shadow:0 0 0 3px var(--accent-soft),inset 0 0 0 1px rgba(255,255,255,.52)}
 .hero-preview{display:grid;place-items:center;aspect-ratio:2/1;margin:14px 0;border-radius:26px;border:1px solid #e7cfad;background:#f7dfb8;overflow:hidden}
+.hero-preview.icon-preview-stage,.mobile-preview-stage.icon-preview-stage{background:transparent;border-color:transparent}
 .single-preview{min-height:0}
 .mobile-preview-dock{display:none}
 .mobile-preview-stage{display:grid;place-items:center;border:1px solid #e7cfad;background:#f7dfb8;overflow:hidden}

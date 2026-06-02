@@ -38,7 +38,7 @@ const iconCrops = {
   male: { x:62, y:4, width:56, height:56 }
 };
 const iconSceneOffsets = {
-  female: { x:8, y:0 },
+  female: { x:0, y:0 },
   male: { x:12, y:0 }
 };
 const sceneBackgrounds = [
@@ -612,9 +612,10 @@ function drawCurrentDisplay(ts=0){
   const activeView = displayViews.find(view => view.id === active) || displayViews[0];
   const label = activeView?.label || 'Icon';
   $('#activeViewLabel').textContent = label;
+  canvas.parentElement?.classList.toggle('icon-preview-stage', active === 'icon');
 
   if(active === 'icon'){
-    paintCheckerBackground(ctx, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     const size = Math.min(220, canvas.height - 38);
     const x = Math.floor((canvas.width - size) / 2);
     const y = Math.floor((canvas.height - size) / 2);
@@ -685,9 +686,10 @@ function drawMobileDockDisplay(ts=0){
   const label = displayViews.find(view => view.id === active)?.label || 'Icon';
   const labelNode = $('#mobileDockLabel');
   if(labelNode) labelNode.textContent = label;
+  canvas.parentElement?.classList.toggle('icon-preview-stage', active === 'icon');
 
   if(active === 'icon'){
-    paintCheckerBackground(ctx, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     const size = Math.min(canvas.height - 12, 86);
     const x = Math.floor((canvas.width - size) / 2);
     const y = Math.floor((canvas.height - size) / 2);
