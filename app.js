@@ -34,8 +34,8 @@ const displayViews = [
 ];
 
 const iconCrops = {
-  female: { x:58, y:4, width:56, height:56 },
-  male: { x:62, y:4, width:56, height:56 }
+  female: { x:60, y:6, width:52, height:52 },
+  male: { x:64, y:6, width:52, height:52 }
 };
 const iconSceneOffsets = {
   female: { x:0, y:0 },
