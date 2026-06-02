@@ -2,6 +2,8 @@
 
 Criador de avatar em **HTML, CSS e JavaScript puro**. O projeto nao usa Flash, SWF, Ruffle, build step ou dependencias externas: basta abrir o `index.html` ou publicar a pasta em um host estatico.
 
+![Exemplos de avatars criados](examples.png)
+
 ## Recursos
 
 - Montagem unica do personagem usando as pecas do trainer de frente.
