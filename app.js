@@ -75,7 +75,9 @@ const state = {
   activeBackground: 'tall-grass',
   selections: {},
   savedSelections: { female:{}, male:{} },
-  lastRenderToken: 0
+  lastRenderToken: 0,
+  renderPromise: Promise.resolve(),
+  isRendering: false
 };
 
 const imageCache = new Map();
@@ -953,10 +955,32 @@ function randomizeSelections(){
   rerenderHiddenAndDisplay();
 }
 
+function setDownloadButtonsDisabled(disabled){
+  ['downloadCurrentBtn','downloadSceneBtn','downloadSpritesBtn'].forEach(id => {
+    const button = $(`#${id}`);
+    if(button) button.disabled = disabled;
+  });
+}
+
 function downloadCanvas(canvas, filename){
+  if(!canvas || !canvas.width || !canvas.height){
+    console.warn('Canvas ainda nao esta pronto para download.');
+    return;
+  }
+
+  let dataUrl = '';
+  try{
+    dataUrl = canvas.toDataURL('image/png');
+  }catch(err){
+    console.error('Nao foi possivel gerar o PNG para download.', err);
+    alert('Nao foi possivel gerar o PNG. Se voce abriu o arquivo direto do computador, tente rodar com um servidor local ou usar a versao publicada no GitHub Pages.');
+    return;
+  }
+
   const link = document.createElement('a');
   link.download = filename;
-  link.href = canvas.toDataURL('image/png');
+  link.href = dataUrl;
+  link.rel = 'noopener';
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -982,7 +1006,7 @@ function makeCurrentSpriteFrameCanvas(viewId, ts=performance.now()){
   return canvas;
 }
 
-async function makeFullSheetCanvas(){
+function makeFullSheetCanvas(){
   const canvas = document.createElement('canvas');
   canvas.width = 875;
   canvas.height = 160 + 196 + 256 * 3;
@@ -999,6 +1023,7 @@ async function makeFullSheetCanvas(){
 }
 
 function downloadCurrent(){
+  if(state.isRendering) return alert('Aguarde um instante: o avatar ainda esta sendo montado.');
   const active = state.activeView;
   if(active === 'combo') return downloadCanvas(hiddenCanvases.combo, `trainer-preview-completo-${state.gender}.png`);
   if(active === 'front') return downloadCanvas(hiddenCanvases.front, `trainer-front-${state.gender}.png`);
@@ -1008,6 +1033,7 @@ function downloadCurrent(){
 }
 
 function downloadCurrentScenePng(){
+  if(state.isRendering) return alert('Aguarde um instante: o avatar ainda esta sendo montado.');
   const active = state.activeView;
   const view = displayViews.find(entry => entry.id === active) || displayViews[0];
   if(active === 'icon') return downloadCanvas(makeIconSceneCanvas(), `trainer-icon-fundo-${state.gender}.png`);
@@ -1015,7 +1041,7 @@ function downloadCurrentScenePng(){
   downloadCanvas($('#displayCanvas'), `trainer-${view.downloadLabel || active}-fundo-${state.gender}.png`);
 }
 
-async function downloadAll(){
+function downloadAll(){
   downloadCanvas(hiddenCanvases.combo, `trainer-preview-completo-${state.gender}.png`);
   downloadCanvas(hiddenCanvases.front, `trainer-front-${state.gender}.png`);
   downloadCanvas(hiddenCanvases.icon, `trainer-icon-${state.gender}.png`);
@@ -1023,12 +1049,13 @@ async function downloadAll(){
   downloadCanvas(hiddenCanvases.walk, `trainer-overworld-walk-${state.gender}.png`);
   downloadCanvas(hiddenCanvases.run, `trainer-overworld-run-${state.gender}.png`);
   downloadCanvas(hiddenCanvases.bike, `trainer-overworld-bike-${state.gender}.png`);
-  const allCanvas = await makeFullSheetCanvas();
+  const allCanvas = makeFullSheetCanvas();
   downloadCanvas(allCanvas, `trainer-all-sheets-${state.gender}.png`);
 }
 
-async function downloadSpritesSheet(){
-  const allCanvas = await makeFullSheetCanvas();
+function downloadSpritesSheet(){
+  if(state.isRendering) return alert('Aguarde um instante: o avatar ainda esta sendo montado.');
+  const allCanvas = makeFullSheetCanvas();
   downloadCanvas(allCanvas, `trainer-sprites-completos-${state.gender}.png`);
 }
 
@@ -1039,9 +1066,20 @@ function rerenderAfterSelection(){
 }
 
 async function rerenderHiddenAndDisplay(){
-  await renderHiddenViews();
-  drawCurrentDisplay(performance.now());
-  drawMobileDockDisplay(performance.now());
+  const renderPromise = renderHiddenViews();
+  state.renderPromise = renderPromise;
+  state.isRendering = true;
+  setDownloadButtonsDisabled(true);
+  try{
+    await renderPromise;
+    drawCurrentDisplay(performance.now());
+    drawMobileDockDisplay(performance.now());
+  }finally{
+    if(state.renderPromise === renderPromise){
+      state.isRendering = false;
+      setDownloadButtonsDisabled(false);
+    }
+  }
 }
 
 async function setSceneBackground(backgroundId){
