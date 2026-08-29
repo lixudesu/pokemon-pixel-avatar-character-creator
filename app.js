@@ -6114,6 +6114,9 @@
 		bike: `${uiIconBasePath}/view-bike.png`
 	};
 	const elements = {
+		activeCategoryCount: document.querySelector("#active-category-count"),
+		activeCategoryName: document.querySelector("#active-category-name"),
+		activeItemName: document.querySelector("#active-item-name"),
 		app: document.querySelector("#creator-app"),
 		activeViewIcon: document.querySelector("#active-view-icon"),
 		activeViewLabel: document.querySelector("#active-view-label"),
@@ -6128,6 +6131,7 @@
 		partsPanel: document.querySelector("#parts-panel"),
 		partsToggle: document.querySelector("#parts-toggle"),
 		previewCanvas: document.querySelector("#preview-canvas"),
+		previewViewName: document.querySelector("#preview-view-name"),
 		previewToggle: document.querySelector("#preview-toggle"),
 		previewTools: document.querySelector("#preview-tools"),
 		randomizeButton: document.querySelector("#randomize-button"),
@@ -6136,6 +6140,7 @@
 		saveButton: document.querySelector("#save-button"),
 		status: document.querySelector("#creator-status"),
 		variantGrid: document.querySelector("#variant-grid"),
+		variantSection: document.querySelector("#variant-section"),
 		viewTabs: document.querySelector("#view-tabs")
 	};
 	const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -6205,6 +6210,7 @@
 		const option = avatarViewOptions.find((view) => view.value === activeView) ?? avatarViewOptions[0];
 		elements.activeViewIcon.replaceChildren(createIcon(viewIconById[activeView]));
 		elements.activeViewLabel.textContent = `Mostrar ${option.label}`;
+		elements.previewViewName.textContent = option.label;
 	}
 	function renderViewTabs() {
 		elements.viewTabs.replaceChildren();
@@ -6305,6 +6311,11 @@
 		const items = getAvatarItemsForCategory(manifest, category, draft.gender);
 		const selection = draft.selections[category.id];
 		const selectedItemId = getAvatarSelectionItemId(category.id, selection);
+		const selectedItem = items.find((item) => item.id === selectedItemId);
+		elements.activeCategoryName.textContent = category.label;
+		elements.activeCategoryCount.textContent = `${items.length} ${items.length === 1 ? "opção" : "opções"}`;
+		elements.activeItemName.textContent = selectedItem ? `Selecionado: ${selectedItem.name}` : "Nenhum selecionado";
+		elements.itemGrid.setAttribute("aria-label", `Opções de ${category.label}`);
 		if (category.optional) {
 			const noneButton = createButton(!selection ? "is-selected avatar-none-card" : "avatar-none-card", "Nenhum", () => {
 				updateDraft({
@@ -6330,12 +6341,13 @@
 		}
 		if (!selection) {
 			elements.variantGrid.hidden = true;
+			elements.variantSection.hidden = true;
 			return;
 		}
-		const selectedItem = items.find((item) => item.id === selectedItemId);
 		const variants = selectedItem ? getAvatarVariantsForItem(manifest, category, selectedItem, draft.gender) : [];
 		const showVariants = variants.length > 0 && !(category.id === "hat" && selection.item === "base");
 		elements.variantGrid.hidden = !showVariants;
+		elements.variantSection.hidden = !showVariants;
 		if (!showVariants) return;
 		for (const variant of variants) {
 			const selected = selection.variant === variant.id;

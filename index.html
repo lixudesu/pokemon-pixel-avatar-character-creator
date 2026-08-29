@@ -17,18 +17,26 @@
     <div class="app-shell">
       <header class="app-header">
         <div>
-          <p class="app-brand">Pokémon Pixel Avatar Creator</p>
+          <p class="app-brand">Estúdio de treinador Pokémon</p>
           <h1>Crie seu treinador</h1>
           <p class="app-intro">
-            Escolha o visual, teste cada animação e baixe seu avatar — tudo fica somente neste navegador.
+            Combine o visual, confira cada movimento e salve seu personagem. Tudo fica somente neste navegador.
           </p>
         </div>
-        <button class="header-action" id="randomize-button" type="button">Criar aleatório</button>
+        <button class="header-action" id="randomize-button" type="button">Criar visual aleatório</button>
       </header>
 
       <main class="avatar-creator-page" id="creator-app" aria-busy="true">
         <section class="avatar-creator-workbench" aria-label="Criador de avatar">
           <aside class="avatar-creator-preview-panel" aria-label="Prévia do avatar">
+            <div class="avatar-creator-preview-heading">
+              <span>
+                <strong>Prévia</strong>
+                <small id="preview-view-name">Frente</small>
+              </span>
+              <span class="avatar-creator-live-indicator">Ao vivo</span>
+            </div>
+
             <button
               class="avatar-creator-preview-toggle"
               id="preview-toggle"
@@ -85,10 +93,25 @@
             </button>
 
             <div class="avatar-creator-panel" id="parts-panel">
-              <div class="avatar-creator-row" id="gender-row" aria-label="Gênero do avatar"></div>
+              <div class="avatar-creator-base-choice">
+                <span>Modelo base</span>
+                <div class="avatar-creator-row" id="gender-row" aria-label="Modelo base do avatar"></div>
+              </div>
               <div class="avatar-category-tabs" id="category-tabs" aria-label="Partes do avatar"></div>
-              <div class="avatar-item-grid" id="item-grid"></div>
-              <div class="avatar-variant-grid" id="variant-grid" aria-label="Variações"></div>
+
+              <div class="avatar-creator-selection-heading">
+                <span>
+                  <strong id="active-category-name">Corpo</strong>
+                  <small id="active-category-count">Carregando opções...</small>
+                </span>
+                <small id="active-item-name"></small>
+              </div>
+
+              <div class="avatar-item-grid" id="item-grid" aria-label="Opções da categoria"></div>
+              <div class="avatar-variant-section" id="variant-section">
+                <strong>Cor</strong>
+                <div class="avatar-variant-grid" id="variant-grid" aria-label="Cores da peça"></div>
+              </div>
             </div>
           </div>
 
